@@ -1,3 +1,3 @@
-module henryerabor.net/snippetbox
+module github.com/eRaBxEs/mySnippetBox
 
-go 1.17
+go 1.21.6
