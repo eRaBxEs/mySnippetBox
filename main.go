@@ -7,6 +7,11 @@ import (
 
 // define a home handler function which writes a byte slice containing "Hello from snippet box"
 func home(w http.ResponseWriter, r *http.Request) {
+	// add check to catch 404 missing page which manages the organic behavior of servemux that interprets "/" as a wild card
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
 	w.Write([]byte("Hello from snippet box"))
 }
 
