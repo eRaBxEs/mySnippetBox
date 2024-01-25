@@ -20,6 +20,15 @@ func snippetView(w http.ResponseWriter, r *http.Request) {
 }
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
+	// check if the http Method is POST or not
+	if r.Method != "POST" {
+		// if not use the w.WriteHeader() method to write a status code 405
+		// then use the w.Write() method to write the response "Method not allowed"
+		// then return the function to stop further execution of the function
+		w.WriteHeader(405)
+		w.Write([]byte("Method not allowed"))
+		return
+	}
 	w.Write([]byte("Create a new snippet..."))
 }
 
@@ -35,8 +44,8 @@ func main() {
 	// use the http.ListenAndServe() function to start a new server
 	// we pass two parameters, the first is the tcp network address:4000
 	// next we pass the servemux varaiable that we have initializeds
-	// if http.ListenAndServe() returns an error then we log the error using log.fatal(err) which stops the execution of the program
-	// note that error returned by http.ListenAndServe() is a non nil value else it is always nil
+	// if http.ListenAndServe() returns an error then we log the error using log.Fatal(err) which stops the execution of the program
+	// note that error returned by http.ListenAndServe() is a non nil value incase of an error else it is nil
 	log.Println("Starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
