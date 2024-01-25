@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // define a home handler function which writes a byte slice containing "Hello from snippet box"
@@ -16,7 +18,15 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func snippetView(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("View a specific snippet..."))
+	// extract the value of the id parameter from the query string
+	// convert the string id to integer and check that the value is a positive integer else return not found
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+	// use the fmt.Fprintf() to interpolate the id with our response as below
+	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
 }
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
