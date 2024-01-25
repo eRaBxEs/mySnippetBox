@@ -21,7 +21,7 @@ func snippetView(w http.ResponseWriter, r *http.Request) {
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
 	// check if the http Method is POST or not
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		// if not use the http.Error() function to pass the the error message Method not allowed, status code 405 via http.StatusMethodNotAllowed
 		// then return the function to stop further execution of the function
 		w.Header().Set("Allow", "POST") // customize header to set which header are allowed for this particular URL
