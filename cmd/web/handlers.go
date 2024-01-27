@@ -14,24 +14,27 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// use the template.ParseFiles() function to read the template file into a template set
-	// send a generic 500 internal server error incase of an error
-	ts, err := template.ParseFiles("./ui/html/pages/home.tmpl")
+	// add all the template files paths as slice of strings, note that the base path should be the first string
+	files := []string{
+		"./ui/html/base.tmpl",
+		"./ui/html/pages/home.tmpl",
+	}
+
+	// use the slice of strings as a variadic parameter
+	ts, err := template.ParseFiles(files...)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
 
-	// use Execute() method on the template set to write the template content as a response body which for now we will leave as nil
-	err = ts.Execute(w, nil)
+	// use ExecuteTemplate() method to write the content of the "base" template as the response body
+	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
-
-	w.Write([]byte("Hello Snippet!"))
 }
 
 func snippetView(w http.ResponseWriter, r *http.Request) {
