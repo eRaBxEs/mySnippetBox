@@ -17,6 +17,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// add all the template files paths as slice of strings, note that the base path should be the first string
 	files := []string{
 		"./ui/html/base.tmpl",
+		"./ui/html/partials/nav.tmpl",
 		"./ui/html/pages/home.tmpl",
 	}
 
